@@ -20,8 +20,16 @@ const data = [
   },
 ];
 
-// This route gets *ALL* the users
-app.get('/api/users', function(req, res) {
+app.get("/api/users/:id", (req, res) => {
+    const user = data.find((user) => {return user.id === parseInt(req.params.id)});
+    if (user){
+      res.json(user);
+    } else {
+      res.status(404).send("The user was not found.");
+    }
+  });
+
+/*app.get('/api/users', function(req, res) {
     const user_id = req.query.id;
     const token = req.query.token;
     const geo = req.query.geo;
@@ -31,7 +39,9 @@ app.get('/api/users', function(req, res) {
       'token': 'John Doe',
       'geo': 32
     });
-  });
+  });*/
+
+
 
 // Add a new route to get a *SINGLE* user (you can use either path param or query param)
 // /api/users/1      <-- path param (req.params.id)
